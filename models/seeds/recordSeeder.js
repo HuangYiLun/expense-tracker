@@ -40,7 +40,7 @@ db.once('open', () => {
                 return Record.create({
                   name: record.name,
                   date: record.date,
-                  number: record.number,
+                  amount: record.amount,
                   userId: userId,
                   categoryId: categoryIds[record.category]
                 })

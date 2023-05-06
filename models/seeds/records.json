@@ -3,31 +3,31 @@
     {
       "name": "午餐",
       "date": "2019-04-23",
-      "number": 60,
+      "amount": 60,
       "category": "meals"
     },
     {
       "name": "晚餐",
       "date": "2019-04-23",
-      "number": 60,
+      "amount": 60,
       "category": "meals"
     },
     {
       "name": "捷運",
       "date": "2019-04-23",
-      "number": 120,
+      "amount": 120,
       "category": "transport"
     },
     {
       "name": "電影：驚奇隊長",
       "date": "2019-04-23",
-      "number": 220,
+      "amount": 220,
       "category": "entertainment"
     },
     {
       "name": "租金",
       "date": "2019-04-23",
-      "number": 25000,
+      "amount": 25000,
       "category": "house"
     }
 

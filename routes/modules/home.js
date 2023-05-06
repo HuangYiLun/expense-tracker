@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
 
     //計算總金額
     records.forEach(record => {
-      totalAmount += record.number
+      totalAmount += record.amount
     })
 
     res.render('index', { records, categories, totalAmount })
