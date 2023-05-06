@@ -74,8 +74,17 @@ router.put('/:records_id', async (req, res) => {
   } catch (error) {
     console.warn(error)
   }
+})
 
-
+router.delete('/:records_id', async (req, res) => {
+  const userId = req.user._id
+  const _id = req.params.records_id
+  try {
+    await Record.findOneAndDelete({ _id, userId })
+    res.redirect('/')
+  } catch (error) {
+    console.warn(error)
+  }
 })
 
 module.exports = router
