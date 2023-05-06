@@ -27,7 +27,7 @@
         <td>{{this.name}}</td>
         <td class="text-end">{{this.number}}</td>
         <td class="text-end">
-          <a class="btn btn-outline-success" href="/">修改</a>
+          <a class="btn btn-outline-success" href="/records/{{this._id}}/edit">修改</a>
           <a class="btn btn-outline-danger" href="/">刪除</a>
         </td>
       </tr>
@@ -35,7 +35,7 @@
     </table>
 
     <div class="container-new-expense mt-5 text-center">
-      <a class="btn w-50" style="background-color: coral; color:aliceblue" href="/new">新增支出</a>
+      <a class="btn w-50" style="background-color: coral; color:aliceblue" href="/records/new">新增支出</a>
     </div>
 
   </div>
