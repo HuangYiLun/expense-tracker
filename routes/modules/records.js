@@ -20,11 +20,8 @@ router.get('/new', async (req, res) => {
 router.post('/', async (req, res) => {
   const userId = req.user._id
   const { name, date, category, amount } = req.body
-  console.log(`category.name:${category}`)
   try {
     const mongoCategory = await Category.findOne({ name: category }).lean().sort({ _id: 'asc' })
-
-    console.log(`categoryid:${mongoCategory}`)
 
     await Record.create({
       name,
@@ -57,6 +54,27 @@ router.get('/:records_id/edit', async (req, res) => {
   } catch (error) {
     console.warn(`routes/modules/records/edit:${error}`)
   }
+
+})
+
+router.put('/:records_id', async (req, res) => {
+  const userId = req.user._id
+  const _id = req.params.records_id
+  const { name, date, category, amount } = req.body
+
+  try {
+    const mongoCategory = await Category.findOne({ name: category }).lean().sort({ _id: 'asc' })
+
+    const update = { name, date, amount, categoryId: mongoCategory._id, userId }
+
+    await Record.findOneAndUpdate({ _id, userId }, update, { new: true })
+
+    res.redirect('/')
+
+  } catch (error) {
+    console.warn(error)
+  }
+
 
 })
 
