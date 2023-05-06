@@ -8,7 +8,7 @@ const Category = require('../../models/category')
 router.get('/', async (req, res) => {
   try {
     //等login功能完成後修改
-    const userId = "6456195150014a7b8c27200b"
+    const userId = req.user._id
     
     let totalAmount = 0
 
