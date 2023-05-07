@@ -20,6 +20,7 @@ router.get('/new', async (req, res) => {
 router.post('/', async (req, res) => {
   const userId = req.user._id
   const { name, date, category, amount } = req.body
+  
   try {
     const mongoCategory = await Category.findOne({ name: category }).lean().sort({ _id: 'asc' })
 
@@ -56,7 +57,7 @@ router.get('/:records_id/edit', async (req, res) => {
   }
 
 })
-
+//編輯支出
 router.put('/:records_id', async (req, res) => {
   const userId = req.user._id
   const _id = req.params.records_id
@@ -76,6 +77,8 @@ router.put('/:records_id', async (req, res) => {
   }
 })
 
+
+//刪除支出
 router.delete('/:records_id', async (req, res) => {
   const userId = req.user._id
   const _id = req.params.records_id

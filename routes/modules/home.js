@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const Records = require('../../models/record')
+const Record = require('../../models/record')
 const Category = require('../../models/category')
 
 //定義首頁路由
@@ -9,11 +9,11 @@ router.get('/', async (req, res) => {
   try {
     //等login功能完成後修改
     const userId = req.user._id
-    
+
     let totalAmount = 0
 
     const categories = await Category.find().lean().sort({ _id: 'asc' })
-    const records = await Records.find({ userId }).populate('categoryId').lean().sort({ _id: 'asc' })
+    const records = await Record.find({ userId }).populate('categoryId').lean().sort({ _id: 'asc' })
 
     //計算總金額
     records.forEach(record => {
@@ -27,5 +27,36 @@ router.get('/', async (req, res) => {
   }
 
 })
+
+//篩選類別
+router.get('/filter', async (req, res) => {
+  const userId = req.user._id
+  const { selectedCategory } = req.query
+  let totalAmount = 0
+
+  if (selectedCategory == 'all') return res.redirect('/')
+
+  try {
+
+    const categories = await Category.find().lean().sort({ _id: 'asc' })
+
+    const categoryIds = {}
+    categories.map((category) => categoryIds[category.name] = category._id)
+    const selectedCategoryId = categoryIds[selectedCategory]
+    console.log(`selectedCategoryId:${selectedCategoryId}`)
+
+    const records = await Record.find({ categoryId: selectedCategoryId, userId }).populate('categoryId').lean().sort({ _id: 'asc' })
+
+    records.forEach(record => {
+      totalAmount += record.amount
+    })
+
+    res.render('index', { records, categories, totalAmount })
+  } catch (error) {
+    console.warn(error)
+  }
+
+})
+
 
 module.exports = router
