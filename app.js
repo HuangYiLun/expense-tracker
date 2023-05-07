@@ -11,6 +11,7 @@ require('./config/mongoose')
 
 
 const app = express()
+const port = process.env.PORT
 
 app.engine('hbs', exhbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
@@ -35,6 +36,6 @@ app.use((req, res, next) => {
 })
 app.use(routes)
 
-app.listen(3000, () => {
-  console.log('app is running on http:localhost:3000')
+app.listen(port, () => {
+  console.log(`app is running on http:localhost:${port}`)
 })
