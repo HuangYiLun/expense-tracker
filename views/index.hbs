@@ -4,7 +4,12 @@
     <form action="/filter">
       <select name="selectedCategory" class="form-select form-select-lg mt-3" aria-label=".form-select-lg example"
         onchange="this.form.submit()">
+
+        {{#if selectedCategory}}
+        <option value="{{categorySelected}}" hidden="hidden" selected>{{ selectedCategory }}</option>
+        {{else}}
         <option selected>類別</option>
+        {{/if}}
         <option value="all">all</option>
         {{#each categories}}
         <option value="{{ this.name }}">{{ this.name }}</option>

@@ -34,8 +34,21 @@ router.get('/filter', async (req, res) => {
   const { selectedCategory } = req.query
   let totalAmount = 0
 
-  if (selectedCategory == 'all') return res.redirect('/')
+  if (selectedCategory == 'all') {
 
+    try {
+      const categories = await Category.find().lean().sort({ _id: 'asc' })
+
+      const records = await Record.find({ userId }).populate('categoryId').lean().sort({ _id: 'asc' })
+      records.forEach(record => {
+        totalAmount += record.amount
+      })
+      return res.render('index', { records, categories, totalAmount, selectedCategory })
+
+    } catch (error) {
+      console.warn(`routes/modules/home/get:${error}`)
+    }
+  }
   try {
 
     const categories = await Category.find().lean().sort({ _id: 'asc' })
@@ -43,7 +56,6 @@ router.get('/filter', async (req, res) => {
     const categoryIds = {}
     categories.map((category) => categoryIds[category.name] = category._id)
     const selectedCategoryId = categoryIds[selectedCategory]
-    console.log(`selectedCategoryId:${selectedCategoryId}`)
 
     const records = await Record.find({ categoryId: selectedCategoryId, userId }).populate('categoryId').lean().sort({ _id: 'asc' })
 
@@ -51,7 +63,7 @@ router.get('/filter', async (req, res) => {
       totalAmount += record.amount
     })
 
-    res.render('index', { records, categories, totalAmount })
+    res.render('index', { records, categories, totalAmount, selectedCategory })
   } catch (error) {
     console.warn(error)
   }
